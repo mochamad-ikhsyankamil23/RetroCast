@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  --color-aero-cyan: #00C9FF;
+  --color-aero-green: #92FE9D;
+  --color-aero-pink: #f8bbd0;
+  --color-aero-yellow: #fff9c4;
+  --color-aero-purple: #d1c4e9;
+  --color-aero-text: #1a237e;
+  --color-aero-border: rgba(255, 255, 255, 0.3);
+  --color-aero-glass: rgba(255, 255, 255, 0.2);
+  --color-aero-glassHover: rgba(255, 255, 255, 0.3);
+
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 15px rgba(0, 201, 255, 0.5);
+
+  --background-image-aero-gradient: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%);
+  --background-image-aero-bg: linear-gradient(180deg, #e0f7fa 0%, #b2dfdb 100%);
+  --background-image-glossy-overlay: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 51%, rgba(255, 255, 255, 0.2) 100%);
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+}
+
+:root {
+  --background: #e0f7fa;
+  --foreground: #1a237e;
+}
+
+body {
+  color: var(--foreground);
+  background: linear-gradient(180deg, #e0f7fa 0%, #b2dfdb 100%);
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Background Bubbles for Frutiger Aero Vibe */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(255,255,255,0.4) 0%, transparent 20%),
+    radial-gradient(circle at 85% 30%, rgba(0,201,255,0.2) 0%, transparent 25%),
+    radial-gradient(circle at 50% 80%, rgba(146,254,157,0.3) 0%, transparent 30%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-aero-glass backdrop-blur-[16px] border border-aero-border rounded-[20px] shadow-glass relative overflow-hidden;
+  }
+  
+  .glass-panel::after {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/30 to-transparent pointer-events-none;
+  }
+
+  .glossy-button {
+    @apply relative overflow-hidden bg-aero-gradient text-aero-text font-semibold rounded-full shadow-md border border-white/40 transition-transform hover:scale-105 active:scale-95;
+  }
+  
+  .glossy-button::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 bottom-0 bg-glossy-overlay pointer-events-none;
+  }
+  
+  .glossy-button:hover {
+    @apply shadow-glow;
+  }
+
+  .input-glass {
+    @apply bg-white/40 backdrop-blur-md border border-white/50 rounded-lg px-4 py-2 text-aero-text placeholder:text-aero-text/50 focus:outline-none focus:ring-2 focus:ring-aero-cyan/50 focus:bg-white/60 transition-all shadow-inner;
+  }
+  
+  .table-glass {
+    @apply w-full border-collapse overflow-hidden rounded-[20px] shadow-glass bg-white/20 backdrop-blur-[16px] border border-aero-border;
+  }
+  
+  .table-glass th {
+    @apply bg-white/30 py-3 px-4 text-left font-semibold border-b border-white/20;
+  }
+  
+  .table-glass td {
+    @apply py-3 px-4 border-b border-white/10;
+  }
+  
+  .table-glass tr:hover {
+    @apply bg-white/40 transition-colors;
+  }
+
+  .badge-glass {
+    @apply px-3 py-1 rounded-full text-xs font-semibold shadow-inner border border-white/40 backdrop-blur-md;
+  }
+}
